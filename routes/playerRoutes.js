@@ -18,8 +18,8 @@ function getConenction(){
 router.get('/players', (req, res) => {
     
     getConenction().query('SELECT * FROM players',(err, rows, fields)=>{
-        if (errs) {
-            console.log('Ran into an error' + errs);
+        if (err) {
+            console.log('Ran into an error' + err);
             res.sendStatus(500);
             return;
         }
