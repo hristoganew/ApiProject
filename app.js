@@ -2,12 +2,9 @@ const express = require("express");
 const mysql = require("mysql");
 
 const api = express();
+const playerRoutes = require('./routes/playerRoutes')
+api.use(playerRoutes);
 
 api.listen(3000, () => {
-    console.log('test');
-})
-
-api.get('/', (req, res) => {
-    console.log('getTest');
-    res.send('Hello World');
+    console.log('Api running...');
 })
