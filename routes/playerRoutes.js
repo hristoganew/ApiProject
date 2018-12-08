@@ -16,8 +16,17 @@ function getConenction(){
 
 //fetch all players
 router.get('/players', (req, res) => {
+    let queryString = 'SELECT * FROM players';
     
-    getConenction().query('SELECT * FROM players',(err, rows, fields)=>{
+    if(req.query.o){
+        queryString += ' ORDER BY ' + req.query.o;
+
+        if(req.query.ot){
+            queryString += ' ' + req.query.ot;
+        }
+    }
+
+    getConenction().query(queryString,(err, rows, fields)=>{
         if (err) {
             console.log('Ran into an error' + err);
             res.sendStatus(500);
@@ -29,13 +38,12 @@ router.get('/players', (req, res) => {
 });
 
 //fetch player by id
-router.get('/player/:id?o=:order', (req, res) => {
+router.get('/players/:id', (req, res) => {
     let id = req.params.id;
-    let order = req.params.order;
     if(id){
         getConenction().query('SELECT * FROM players WHERE id=?', [id] ,(err, rows, fields)=>{
-            if (errs) {
-                console.log('Ran into an error' + errs);
+            if (err) {
+                console.log('Ran into an error' + err);
                 res.sendStatus(500);
                 return;
             }
