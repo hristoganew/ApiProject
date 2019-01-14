@@ -56,10 +56,28 @@ router.get('/players/:id', (req, res) => {
 
 //create player
 router.post('/player', (req, res) => {
-    console.log(req.body);
+    let firstName = req.body.firstName;
+    let lastName = req.body.lastName;
+    let team = req.body.team;
 
+        let queryString = 'INSERT INTO players(first_name, last_name, team) VALUES (\''+ firstName +'\', \''+ lastName +'\', \''+ team +'\')';
+        console.log(queryString);
+        getConenction().query(queryString, (err, rows, fields) => {
+            if (err) {
+                console.log('Ran into an error' + err);
+                res.sendStatus(500);
+                return;
+            }
+    
+            res.send('Patient Added');
+        });
+});
+
+//edit player
+router.post('/player/:id', (req, res) => {
+    
     // if(id){
-    //     let queryString = 'INSERT INTO players() VALUES (value1, value2, value3, ...)';
+    //     let queryString = 'UPDATE players SET ? = ? WHERE id = ?';
     //     getConenction().query(queryString, [id] ,(err, rows, fields)=>{
     //         if (errs) {
     //             console.log('Ran into an error' + errs);
@@ -73,8 +91,8 @@ router.post('/player', (req, res) => {
     
 });
 
-//edit player
-router.post('/player/:id', (req, res) => {
+//delete player by id
+router.delete('/player/:id', (req, res) => {
     console.log(req.body);
     let id = req.params.id;
     // if(id){
